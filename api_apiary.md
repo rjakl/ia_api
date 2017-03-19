@@ -68,6 +68,7 @@ Retreivest Auction with the given ID.
 List of auctions.
 ### Retreive Auctions [GET]
 Retreivest a list of auctions.
+
     + Parameters
         + actual_bid: 1 (number, optional) - Return auctions with higher actual bid.
         + currency: CZK (string, optional) - Return auctions with this currency.
@@ -78,6 +79,7 @@ Retreivest a list of auctions.
         + offset: 25 (number, optional) - Skip / do not return first 25 auctions 
  
 + Response 200 (application/json)
+
     + Body
     
             {
