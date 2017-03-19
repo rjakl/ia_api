@@ -43,8 +43,9 @@ Retreivest Auction with the given ID.
                     "id": 1,
                     "name": "Aukce 1"
                     "status": "RUNNING",
-                    "due_date": "2016-06-30",
-                    "end_date": "2016-05-18 13:10:00",
+                    "start_date": "2016-04-18T13:10:00"",
+                    "due_date": "2016-06-30T13:10:00",
+                    "end_date": "2016-05-18T13:10:00",
                     "price": "500000.00",
                     "currency": "CZK",
                     "economical_rating": "A+",
@@ -55,7 +56,7 @@ Retreivest Auction with the given ID.
                     "winning_user": 6,
                     "actual_bid": 11.6,
                     "details": "Jedná se o dodávku nápojů ...",
-                    "insurance": "Euler Hermes",
+                    "insurance": "T",
                     "counterparty": "Ahold",
                     "industry": "Maloobchod"
                 },
@@ -63,13 +64,10 @@ Retreivest Auction with the given ID.
                     "code": 200
                 }
             }
-
 ## Auctions [/auctions{?actual_bid}{?currency}{?industry}{?status}{?price}{?limit}{?offset}]
 List of auctions.
-
 ### Retreive Auctions [GET]
 Retreivest a list of auctions.
-
     + Parameters
         + actual_bid: 1 (number, optional) - Return auctions with higher actual bid.
         + currency: CZK (string, optional) - Return auctions with this currency.
@@ -79,16 +77,24 @@ Retreivest a list of auctions.
         + limit: 10 (number, optional) - Return 10 auctions.
         + offset: 25 (number, optional) - Skip / do not return first 25 auctions 
  
-
 + Response 200 (application/json)
-
     + Body
     
             {
                 "data":[
                     {
                         "id": 1,
-                        ...
+                        "status": "RUNNING",
+                        "counterparty": "Ahold",
+                        "price": "500000.00",
+                        "currency": "CZK",
+                        "winning_user": 6,
+                        "actual_bid": 11.6,
+                        "bid_users": [3, 6],
+                        "rating": "A+",
+                        "due_date": "2016-06-30T13:10:00",
+                        "end_date": "2016-05-18T13:10:00",
+                        "insurance": "T"
                     },
                     {
                         "id": 2,
@@ -103,12 +109,9 @@ Retreivest a list of auctions.
                     "code": 200,
                 }
             }
-
 ## Bids [/auctions/{?id}/bids]
 ### Get bids on auction [GET]
-
 + Response 200 (application/json) 
-
     + Body
     
             {
@@ -116,28 +119,24 @@ Retreivest a list of auctions.
                     {
                         "user_id": 1,
                         "bid_interest": 10.5,
-                        "timestamp": "2016-07-21 17:08:00"
+                        "timestamp": "2016-07-21T17:08:00"
                     },
                     {
                         "user_id": 2,
                         "bid_interest": 10.4,
-                        "timestamp": "2016-07-21 17:08:00"
+                        "timestamp": "2016-07-21T17:08:00"
                     }
                 ],
                 "meta": {
                     "code": 200,
                 }
             }
-
 ### Post new offer [POST]  
-
 + Request (application/json) 
-
     + Body
     
             {
                 "user_id": 1,
                 "bid_interest": 10.5
             }
-
 + Response 201
