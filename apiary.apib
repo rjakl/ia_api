@@ -15,7 +15,10 @@ IA API is API distributing information about auctions and allows investors to bi
 
             {
                 "data":{
-                    "auctions_url": "/auctions"
+                    "auctions_url": "/auctions",
+                    "industries_url": /industries",
+                    "auction_bids": "/auctions/{?id}/bids",
+                    
                 },
                 "meta": {
                     "code": 200
@@ -29,9 +32,11 @@ An Auction contains information about current state.
 Retreivest Auction with the given ID.
 
     + Parameters
+    
         + id: 1 (number, required) - ID of auction
     
     + Attributes
+    
         + bid_users - List of investor IDs, which bidded on auction.
 
 + Response 200 (application/json)
@@ -41,44 +46,47 @@ Retreivest Auction with the given ID.
             {
                 "data":{
                     "id": 1,
-                    "name": "Aukce 1"
+                    "name": "Aukce 1",
                     "status": "RUNNING",
-                    "start_date": "2016-04-18T13:10:00"",
+                    "start_date": "2016-04-18T13:10:00",
                     "due_date": "2016-06-30T13:10:00",
                     "end_date": "2016-05-18T13:10:00",
                     "price": "500000.00",
                     "currency": "CZK",
                     "economical_rating": "A+",
-                    "payment_rating": "B++"
+                    "payment_rating": "B++",
                     "face_value": "1000000.00",
                     "bid_users": [3, 6],
                     "max_interest": 12.0,
                     "winning_user": 6,
                     "actual_bid": 11.6,
-                    "details": "Jedná se o dodávku nápojů ...",
+                    "details": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin in tellus sit amet nibh dignissim sagittis. Integer vulputate sem a nibh rutrum consequat. Nullam at arcu a est sollicitudin euismod. Morbi leo mi, nonummy eget tristique non, rhoncus non leo. Nullam feugiat, turpis at pulvinar vulputate, erat libero tristique tellus, nec bibendum odio risus sit amet ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Nullam lectus justo, vulputate eget mollis sed, tempor sed magna. Pellentesque pretium lectus id turpis. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Fusce tellus. Nullam justo enim, consectetuer nec, ullamcorper ac, vestibulum in, elit. ",
                     "insurance": "T",
                     "counterparty": "Ahold",
-                    "industry": "Maloobchod"
+                    "industry_id": 1
                 },
                 "meta": {
                     "code": 200
                 }
             }
 
-## Auctions [/auctions{?actual_bid}{?currency}{?industry}{?status}{?price}{?limit}{?offset}]
+## Auctions [/auctions{?user_filter}{?interested_user}{?status}{?limit}{?offset}]
 List of auctions.
 
 ### Retreive Auctions [GET]
 Retreivest a list of auctions.
 
     + Parameters
-        + actual_bid: 1 (number, optional) - Return auctions with higher actual bid.
-        + currency: CZK (string, optional) - Return auctions with this currency.
-        + industry: Maloobchod (string, optional) - Return auctions with this industry.
-        + status: RUNNING (string, optional) - Return auctions with this current status.
-        + price: <=500000 (number, optional) - Return auctions with price lower than or equal  500 000.
+        + user_filter: 1 (user_id, optional) - Return user-filtered auctions.
+  
+        + interested_user: 1 (user_id, optional) - Return "my" auctions.
+  
+        + status: RUNNING (string, optional) - Return auctions with this current status (RUNNING / ENDED).
+  
         + limit: 10 (number, optional) - Return 10 auctions.
+  
         + offset: 25 (number, optional) - Skip / do not return first 25 auctions 
+ 
  
 
 + Response 200 (application/json)
@@ -99,19 +107,105 @@ Retreivest a list of auctions.
                         "rating": "A+",
                         "due_date": "2016-06-30T13:10:00",
                         "end_date": "2016-05-18T13:10:00",
-                        "insurance": "T"
+                        "insurance": "T",
+                        "industry_id": 1
                     },
                     {
-                        "id": 2,
-                        ...
+                        "id": 170124,
+                        "status": "RUNNING",
+                        "counterparty": "Federal-Mogul a.s.",
+                        "price": "6 444",
+                        "currency": "EUR",
+                        "winning_user": 1,
+                        "actual_bid": 3.4,
+                        "bid_users": [3, 6],
+                        "rating": "B++",
+                        "due_date": "2016-06-30T13:10:00",
+                        "end_date": "2016-05-18T13:10:00",
+                        "insurance": "T",
+                        "industry_id": 2
                     },
                     {
-                        "id": 3,
-                        ...
+                        "id": 134679,
+                        "status": "RUNNING",
+                        "counterparty": "Alza.cz a.s.",
+                        "price": "90 000",
+                        "currency": "CZK",
+                        "winning_user": 2,
+                        "actual_bid": 11.6,
+                        "bid_users": [3, 6],
+                        "rating": "A+",
+                        "due_date": "2016-06-30T13:10:00",
+                        "end_date": "2016-05-18T13:10:00",
+                        "insurance": "T",
+                        "industry_id": 3
+                    },
+                    {
+                        "id": 180951,
+                        "status": "RUNNING",
+                        "counterparty": "Eur s.r.o.",
+                        "price": "2 500 000",
+                        "currency": "CZK",
+                        "winning_user": 3,
+                        "actual_bid": 11.6,
+                        "bid_users": [3, 6],
+                        "rating": "A++",
+                        "due_date": "2016-06-30T13:10:00",
+                        "end_date": "2016-05-18T13:10:00",
+                        "insurance": "F",
+                        "industry_id": 4
+                    },{
+                        "id": 123124,
+                        "status": "RUNNING",
+                        "counterparty": "Penny market",
+                        "price": "38 354",
+                        "currency": "CZK",
+                        "winning_user": 5,
+                        "actual_bid": 3.4,
+                        "bid_users": [3, 6],
+                        "rating": "B++",
+                        "due_date": "2016-06-30T13:10:00",
+                        "end_date": "2016-05-18T13:10:00",
+                        "insurance": "T",
+                        "industry_id": 3
+                    },
+                    {
+                        "id": 123679,
+                        "status": "RUNNING",
+                        "counterparty": "Penny market",
+                        "price": "420 000",
+                        "currency": "CZK",
+                        "winning_user": 4,
+                        "actual_bid": 11.6,
+                        "bid_users": [3, 6],
+                        "rating": "A+",
+                        "due_date": "2016-06-30T13:10:00",
+                        "end_date": "2016-05-18T13:10:00",
+                        "insurance": "T",
+                        "industry_id": 4
+                    },
+                    {
+                        "id": 180952,
+                        "status": "RUNNING",
+                        "counterparty": "Eur s.r.o.",
+                        "price": "2 500 000",
+                        "currency": "CZK",
+                        "winning_user": 2,
+                        "actual_bid": 11.6,
+                        "bid_users": [3, 6],
+                        "rating": "A++",
+                        "due_date": "2016-06-30T13:10:00",
+                        "end_date": "2016-05-18T13:10:00",
+                        "insurance": "F",
+                        "industry_id": 1
                     }
                 ],
                 "meta": {
                     "code": 200,
+                    "total_auctions":30,
+                    "limit" : 10,
+                    "offset" :20
+                    
                 }
             }
 
@@ -152,3 +246,35 @@ Retreivest a list of auctions.
             }
 
 + Response 201
+
+
+## Industries [/industries]
+### Get industries IDs and names [GET]
+
++ Response 200 (application/json) 
+
+    + Body
+    
+            {
+                "data":[
+                    {
+                        "industry_id": 1,
+                        "name": "Elektronika"
+                    },
+                    {
+                        "industry_id": 2,
+                        "name": "Maloobchod"
+                    },
+                    {
+                        "industry_id": 3,
+                        "name": "Potraviny"
+                    },
+                    {
+                        "industry_id": 4,
+                        "name": "Textil"
+                    }
+                ],
+                "meta": {
+                    "code": 200
+                }
+            }
